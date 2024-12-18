@@ -1,16 +1,22 @@
 import { ClientDetails } from "./components/client-details";
 import { useLayoutEffect, useState } from "react";
 import { getPatients } from "../../bff/api";
+import { useNavigate } from "react-router-dom";
 export const Clients = () => {
   const [patients, setPatients] = useState([]);
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
     const apiCall = async () => {
       const patientsFromServer = await getPatients();
+      if (patientsFromServer === "error") {
+        navigate("/login");
+        return;
+      }
       setPatients(patientsFromServer);
     };
     apiCall();
-  }, []);
+  }, [navigate]);
   return (
     <>
       <h1>Заявки с формы</h1>

@@ -2,20 +2,19 @@ const mongoose = require("mongoose");
 
 const ClientSchema = mongoose.Schema({
   requestDate: {
-    type: String || Object,
-    // required: true,
+    type: String,
+    required: true,
   },
   fullName: {
     type: String,
-    // required: true,
+    required: true,
   },
   phone: {
     type: String,
-    // required: true,
+    required: true,
   },
   complaint: {
     type: String,
-    // required: true,
   },
 });
 

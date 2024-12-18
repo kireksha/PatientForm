@@ -13,7 +13,6 @@ async function addClient(requestDate, fullName, phone, complaint) {
     phone,
     complaint,
   });
-  console.log(chalk.bgGreen("Client was added"));
 }
 
 module.exports = {

@@ -1,17 +1,12 @@
-import { useState } from "react";
-
 export const Input = ({
   isTextarea = false,
   labelText,
   placeholder = "",
   inputType = "text",
   inputName,
+  value,
+  onChange,
 }) => {
-  const [text, setText] = useState("");
-  const onChange = ({ target }) => {
-    setText(target.value);
-  };
-
   return (
     <div className="mb-3">
       <label className="form-label" htmlFor={inputName}>
@@ -23,7 +18,7 @@ export const Input = ({
           name={inputName}
           placeholder={placeholder}
           onChange={onChange}
-          value={text}
+          value={value}
           data-client={inputName}
         />
       ) : (
@@ -33,7 +28,7 @@ export const Input = ({
           type={inputType}
           placeholder={placeholder}
           onChange={onChange}
-          value={text}
+          value={value}
           required={true}
           data-client={inputName}
         />
