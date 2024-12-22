@@ -12,7 +12,12 @@ const auth = require("./middleware/auth");
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 app.use(
   express.urlencoded({
     extended: true,
@@ -44,8 +49,9 @@ app.post("/login", async (req, res) => {
   try {
     const token = await loginUser(req.body.email, req.body.password);
     res.cookie("token", token, { httpOnly: true });
-
-    res.redirect("/clients");
+    res.send({
+      error: null,
+    });
   } catch (e) {
     res.send({
       error: e.message,
@@ -53,16 +59,25 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/logout", (req, res) => {
-  res.cookie("token", "", { httpOnly: true });
-
-  res.redirect("/");
+app.get("/logout", async (req, res) => {
+  try {
+    await res.cookie("token", "", { httpOnly: true });
+    res.send({
+      error: null,
+      logoutSuccess: "user was logout",
+    });
+  } catch (e) {
+    res.send({
+      erorr: e.message,
+      logoutSuccess: null,
+    });
+  }
 });
 
 app.use(auth);
 
 app.get("/clients", async (req, res) => {
-  res.send({ clients: await getClients(), userEmail: req.user.email });
+  res.send({ clients: await getClients() });
 });
 
 mongoose

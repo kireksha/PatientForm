@@ -1,7 +1,18 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { Main, Login, Clients } from "./pages";
+import { logoutUser } from "./bff/api";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLogin } from "./selectors";
 
 function App() {
+  const isLogin = useSelector(selectLogin);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onLogout = async () => {
+    await logoutUser();
+    dispatch({ type: "SET_IS_LOGIN", payload: false });
+    navigate("/");
+  };
   return (
     <div className="pt-3 mx-auto" style={{ maxWidth: "1000px" }}>
       <header className="App-header">
@@ -23,6 +34,7 @@ function App() {
                   Clients
                 </Link>
               </li>
+              <li>{isLogin && <button onClick={onLogout}>Logout</button>}</li>
             </ul>
           </div>
         </nav>

@@ -1,4 +1,3 @@
-const chalk = require("chalk");
 const User = require("./model/User");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("./constants");

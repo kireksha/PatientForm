@@ -3,6 +3,7 @@ import { loginUser } from "../../bff/api";
 import { Input, Button } from "../../components";
 import {
   selectLoading,
+  selectLogin,
   selectTextEmail,
   selectTextPassword,
 } from "../../selectors";
@@ -10,12 +11,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const [loginError, setLoginError] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const textEmail = useSelector(selectTextEmail);
   const textPassword = useSelector(selectTextPassword);
   const isLoading = useSelector(selectLoading);
-  const [loginError, setLoginError] = useState(null);
-  const navigate = useNavigate();
 
   const onBtnClick = (event) => {
     event.preventDefault();
@@ -24,7 +25,9 @@ export const Login = () => {
       if (res.data.error) {
         setLoginError(res.data.error);
       } else {
-        setLoginError(null);
+        setLoginError(res.data.error);
+        dispatch({ type: "RESET_FORM" });
+        dispatch({ type: "SET_IS_LOGIN", payload: true });
         navigate("/clients");
       }
     });

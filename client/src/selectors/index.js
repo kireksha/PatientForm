@@ -4,3 +4,4 @@ export * from "./text-phone-selector";
 export * from "./text-complaint-selector";
 export * from "./text-email-selector";
 export * from "./text-password-selector";
+export * from "./login-selector";

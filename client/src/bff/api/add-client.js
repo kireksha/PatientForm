@@ -8,6 +8,7 @@ export const addClient = (requestDate, fullName, phone, complaint) => {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
+      withCredentials: true,
     }
   );
 };

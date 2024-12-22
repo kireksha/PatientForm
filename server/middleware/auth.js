@@ -7,7 +7,6 @@ function auth(req, res, next) {
 
   try {
     const verifyResult = jwt.verify(token, JWT_SECRET);
-    console.log(chalk.bgRed(verifyResult));
 
     req.user = {
       email: verifyResult.email,
